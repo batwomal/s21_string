@@ -1,0 +1,175 @@
+#include "../s21_string_tests.h"
+#include "test_s21_sprintf.h"
+
+#suite s21_sprintf
+
+  #test-loop(0,8) no_spec
+    char *inputs_no_spec[] = INPUT_NO_SPEC;
+    char s21_out[BUF_SIZE] = {0};
+    char orig_out[BUF_SIZE] = {0};
+    int s21_len = s21_sprintf(s21_out, inputs_no_spec[_i]);
+    int orig_len = -1;
+    if (inputs_no_spec[_i])
+      orig_len = sprintf(orig_out,inputs_no_spec[_i], 0);
+    int result = s21_len == orig_len && strcmp(s21_out, orig_out) == 0;
+    ck_assert_msg(result, "\n[orig len: %d]\n[s21 len: %d]\n[orig str: {%s}]\n[s21 str: {%s}]\n[input: {%s}]\n",
+                  orig_len, s21_len, orig_out, s21_out, inputs_no_spec[_i]);
+
+  
+
+  #test-loop(0,10) spec_c
+    input_spec_c input[] = INPUT_SPEC_C;
+    char s21_out[BUF_SIZE] = {0};
+    char orig_out[BUF_SIZE] = {0};
+    int len_s21 = s21_sprintf(s21_out, input[_i].input, input[_i].c);
+    int len_orig = sprintf(orig_out, input[_i].input, input[_i].c);
+    int result = len_s21 == len_orig && strcmp(s21_out, orig_out) == 0;
+    ck_assert_msg(result, "\n[orig len: %d]\n[s21 len: %d]\n[orig str: {%s}]\n[s21 str: {%s}]\n[input: {%s} , %c]\n", len_orig, len_s21, orig_out, s21_out, input[_i].input, input[_i].c);
+
+  #test-loop(0,4) spec_percent  
+    char *input[] = INPUT_SPEC_PERCENT;
+    char s21_out[BUF_SIZE] = {0};
+    char orig_out[BUF_SIZE] = {0};
+    int len_s21 = s21_sprintf(s21_out, input[_i], 0);
+    int len_orig = sprintf(orig_out, input[_i], 0);
+    int result = len_s21 == len_orig && strcmp(s21_out, orig_out) == 0;
+    ck_assert_msg(result, "\n[orig len: %d]\n[s21 len: %d]\n[orig str: {%s}]\n[s21 str: {%s}]\n[input: {%s}]\n", len_orig, len_s21, orig_out, s21_out, input[_i]);
+  
+  #test-loop(0,20) spec_s
+    input_spec_s input[] = INPUT_SPEC_S;
+    char s21_out[BUF_SIZE] = {0};
+    char orig_out[BUF_SIZE] = {0};
+    int len_s21 = s21_sprintf(s21_out, input[_i].input, input[_i].str);
+    int len_orig = sprintf(orig_out, input[_i].input, input[_i].str);
+    int result = len_s21 == len_orig && strcmp(s21_out, orig_out) == 0;
+    ck_assert_msg(result, "\n[orig len: %d]\n[s21 len: %d]\n[orig str: {%s}]\n[s21 str: {%s}]\n[input: {%s} , {%s}]\n", len_orig, len_s21, orig_out, s21_out, input[_i].input, input[_i].str);
+
+  #test-loop(0,46) spec_d
+    input_spec_ints input[] = INPUT_SPEC_D;
+    char s21_out[BUF_SIZE] = {0};
+    char orig_out[BUF_SIZE] = {0};
+    int len_s21 = s21_sprintf(s21_out, input[_i].input, input[_i].num);
+    int len_orig = sprintf(orig_out, input[_i].input, input[_i].num);
+    int result = len_s21 == len_orig && strcmp(s21_out, orig_out) == 0;
+    ck_assert_msg(result, "\n[orig len: %d]\n[s21 len: %d]\n[orig str: {%s}]\n[s21 str: {%s}]\n[input: {{%s} , %lld}]\n", len_orig, len_s21, orig_out, s21_out, input[_i].input, input[_i].num);
+
+  #test-loop(0,46) spec_u
+    input_spec_ints input[] = INPUT_SPEC_U;
+    char s21_out[BUF_SIZE] = {0};
+    char orig_out[BUF_SIZE] = {0};
+    int len_s21 = s21_sprintf(s21_out, input[_i].input, input[_i].num);
+    int len_orig = sprintf(orig_out, input[_i].input, input[_i].num);
+    int result = (len_s21 == len_orig) && (strcmp(s21_out, orig_out) == 0);
+    ck_assert_msg(result, "\n[orig len: %d]\n[s21 len: %d]\n[orig str: {%s}]\n[s21 str: {%s}]\n[input: {{%s} , %llu}]\n", len_orig, len_s21, orig_out, s21_out, input[_i].input, input[_i].num);
+
+  #test-loop(0,46) spec_x
+    input_spec_ints input[] = INPUT_SPEC_X;
+    char s21_out[BUF_SIZE] = {0};
+    char orig_out[BUF_SIZE] = {0};
+    int len_s21 = s21_sprintf(s21_out, input[_i].input, input[_i].num);
+    int len_orig = sprintf(orig_out, input[_i].input, input[_i].num);
+    int result = (len_s21 == len_orig) && (strcmp(s21_out, orig_out) == 0);
+    ck_assert_msg(result, "\n[orig len: %d]\n[s21 len: %d]\n[orig str: {%s}]\n[s21 str: {%s}]\n[input: {{%s} , %llx}]\n", len_orig, len_s21, orig_out, s21_out, input[_i].input, input[_i].num);
+
+  #test-loop(0,46) spec_x_cap
+    input_spec_ints input[] = INPUT_SPEC_X_CAP;
+    char s21_out[BUF_SIZE] = {0};
+    char orig_out[BUF_SIZE] = {0};
+    int len_s21 = s21_sprintf(s21_out, input[_i].input, input[_i].num);
+    int len_orig = sprintf(orig_out, input[_i].input, input[_i].num);
+    int result = (len_s21 == len_orig) && (strcmp(s21_out, orig_out) == 0);
+    ck_assert_msg(result, "\n[orig len: %d]\n[s21 len: %d]\n[orig str: {%s}]\n[s21 str: {%s}]\n[input: {{%s} , %llX}]\n", len_orig, len_s21, orig_out, s21_out, input[_i].input, input[_i].num);
+
+
+  #test-loop(0,46) spec_o
+    input_spec_ints input[] = INPUT_SPEC_O;
+    char s21_out[BUF_SIZE] = {0};
+    char orig_out[BUF_SIZE] = {0};
+    int len_s21 = s21_sprintf(s21_out, input[_i].input, input[_i].num);
+    int len_orig = sprintf(orig_out, input[_i].input, input[_i].num);
+    int result = (len_s21 == len_orig) && (strcmp(s21_out, orig_out) == 0);
+    ck_assert_msg(result, "\n[orig len: %d]\n[s21 len: %d]\n[orig str: {%s}]\n[s21 str: {%s}]\n[input: {{%s} , %llo}]\n", len_orig, len_s21, orig_out, s21_out, input[_i].input, input[_i].num);
+
+  #test-loop(0,46) spec_i
+    input_spec_ints input[] = INPUT_SPEC_I;
+    char s21_out[BUF_SIZE] = {0};
+    char orig_out[BUF_SIZE] = {0};
+    int len_s21 = s21_sprintf(s21_out, input[_i].input, input[_i].num);
+    int len_orig = sprintf(orig_out, input[_i].input, input[_i].num);
+    int result = (len_s21 == len_orig) && (strcmp(s21_out, orig_out) == 0);
+    ck_assert_msg(result, "\n[orig len: %d]\n[s21 len: %d]\n[orig str: {%s}]\n[s21 str: {%s}]\n[input: {{%s} , %lli}]\n", len_orig, len_s21, orig_out, s21_out, input[_i].input, input[_i].num);
+
+  #test-loop(0,10) spec_p
+    input_spec_c input[] = INPUT_SPEC_P;
+    char s21_out[BUF_SIZE] = {0};
+    char orig_out[BUF_SIZE] = {0};
+    int len_s21 = s21_sprintf(s21_out, input[_i].input, &input[_i].c);
+    int len_orig = sprintf(orig_out, input[_i].input, &input[_i].c);
+    int result = (len_s21 == len_orig) && (strcmp(s21_out, orig_out) == 0);
+    ck_assert_msg(result,
+                "\n[orig len: %d]\n[s21 len: %d]\n[orig str: {%s}]\n[s21 str: "
+                "{%s}]\n[input: {{%s} , %p}]\n",
+                len_orig, len_s21, orig_out, s21_out, input[_i].input,
+                &input[_i].c);
+
+  #test spec_p_null
+    char s21_out[BUF_SIZE] = {0};
+    char orig_out[BUF_SIZE] = {0};
+    int len_s21 = s21_sprintf(s21_out, "aaaa%pZZZZ", NULL);
+    int len_orig = sprintf(orig_out, "aaaa%pZZZZ", NULL);
+    int result = (len_s21 == len_orig) && (strcmp(s21_out, orig_out) == 0);
+    ck_assert_msg(result, "\n[orig len: %d]\n[s21 len: %d]\n[orig str: %s]\n[s21 str: %s]\n[input: %p]\n", len_orig, len_s21, orig_out, s21_out, NULL);
+
+  #test-loop(0,60) spec_f
+    input_spec_floats input[] = INPUT_SPEC_F;
+    char s21_out[BUF_SIZE] = {0};
+    char orig_out[BUF_SIZE] = {0};
+    int len_s21 = s21_sprintf(s21_out, input[_i].input, input[_i].num);
+    int len_orig = sprintf(orig_out, input[_i].input, input[_i].num);
+    int result = (len_s21 == len_orig) && (strcmp(s21_out, orig_out) == 0);
+    ck_assert_msg(result, "\n[orig len: %d]\n[s21 len: %d]\n[orig str: {%s}]\n[s21 str: {%s}]\n[input: {{%s} , %Lf}]\n", len_orig, len_s21, orig_out, s21_out, input[_i].input, input[_i].num);
+
+  #test-loop(0,60) spec_e
+    input_spec_floats input[] = INPUT_SPEC_E;
+    char s21_out[BUF_SIZE] = {0};
+    char orig_out[BUF_SIZE] = {0};
+    int len_s21 = s21_sprintf(s21_out, input[_i].input, input[_i].num);
+    int len_orig = sprintf(orig_out, input[_i].input, input[_i].num);
+    int result = (len_s21 == len_orig) && (strcmp(s21_out, orig_out) == 0);
+    ck_assert_msg(result, "\n[orig len: %d]\n[s21 len: %d]\n[orig str: {%s}]\n[s21 str: {%s}]\n[input: {{%s} , %Le}]\n", len_orig, len_s21, orig_out, s21_out, input[_i].input, input[_i].num);
+
+  #test-loop(0,60) spec_e_caps
+    input_spec_floats input[] = INPUT_SPEC_E_CAPS;
+    char s21_out[BUF_SIZE] = {0};
+    char orig_out[BUF_SIZE] = {0};
+    int len_s21 = s21_sprintf(s21_out, input[_i].input, input[_i].num);
+    int len_orig = sprintf(orig_out, input[_i].input, input[_i].num);
+    int result = (len_s21 == len_orig) && (strcmp(s21_out, orig_out) == 0);
+    ck_assert_msg(result, "\n[orig len: %d]\n[s21 len: %d]\n[orig str: {%s}]\n[s21 str: {%s}]\n[input: {{%s} , %LE}]\n", len_orig, len_s21, orig_out, s21_out, input[_i].input, input[_i].num);
+
+  #test-loop(0,60) spec_g
+    input_spec_floats input[] = INPUT_SPEC_G;
+    char s21_out[BUF_SIZE] = {0};
+    char orig_out[BUF_SIZE] = {0};
+    int len_s21 = s21_sprintf(s21_out, input[_i].input, input[_i].num);
+    int len_orig = sprintf(orig_out, input[_i].input, input[_i].num);
+    int result = (len_s21 == len_orig) && (strcmp(s21_out, orig_out) == 0);
+    ck_assert_msg(result, "\n[orig len: %d]\n[s21 len: %d]\n[orig str: {%s}]\n[s21 str: {%s}]\n[input: {{%s} , %Lg}]\n", len_orig, len_s21, orig_out, s21_out, input[_i].input, input[_i].num);
+
+  #test-loop(0,60) spec_g_caps
+    input_spec_floats input[] = INPUT_SPEC_G_CAPS;
+    char s21_out[BUF_SIZE] = {0};
+    char orig_out[BUF_SIZE] = {0};
+    int len_s21 = s21_sprintf(s21_out, input[_i].input, input[_i].num);
+    int len_orig = sprintf(orig_out, input[_i].input, input[_i].num);
+    int result = (len_s21 == len_orig) && (strcmp(s21_out, orig_out) == 0);
+    ck_assert_msg(result, "\n[orig len: %d]\n[s21 len: %d]\n[orig str: {%s}]\n[s21 str: {%s}]\n[input: {{%s} , %LG}]\n", len_orig, len_s21, orig_out, s21_out, input[_i].input, input[_i].num);
+  
+#main-pre
+    system("mkdir -p tests/logs");
+    char full_filename[BUF_SIZE];
+    sprintf(full_filename, "tests/logs/%s.log",__FILE_NAME__);
+    srunner_set_log(sr, full_filename);
+
+#main-post
+  return nf;

@@ -1,0 +1,46 @@
+#include "../../s21_string.h"
+
+#define N 100
+#define C 'a'
+
+#test normal_data
+char s21_res[N];
+char orig_res[N];
+s21_memset(s21_res, C, N);
+memset(orig_res, C, N);
+  for (int i = 0; i < N; i++) 
+    ck_assert_int_eq(s21_res[i], orig_res[i]);
+  
+
+
+#test zero_data
+char c = 0;
+char s21_res[N];
+char orig_res[N];
+s21_memset(s21_res, c, N);
+memset(orig_res, c, N);
+  for (int i = 0; i < N; i++) 
+    ck_assert_int_eq(s21_res[i], orig_res[i]);
+
+
+#test null_str
+char *s21_res = NULL;
+char *orig_res = NULL;
+s21_memset(s21_res, C, N);
+//memset(orig_res, C, N); //segmentation fault in original memset
+if (s21_res && orig_res) {
+  for (int i = 0; i < N; i++) {
+    ck_assert_int_eq(s21_res[i], orig_res[i]);
+  }
+}
+
+#test len_smaller_n
+char s21_res[N-1];
+char orig_res[N-1];
+s21_memset(s21_res, C, N);
+memset(orig_res, C, N-1);
+  for (int i = 0; i < N-1; i++) 
+    ck_assert_int_eq(s21_res[i], orig_res[i]);
+  
+
+

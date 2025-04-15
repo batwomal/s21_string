@@ -1,0 +1,51 @@
+#include "../../s21_string.h"
+#include "../s21_string_tests.h"
+
+#suite s21_strchr
+#define LEN 100
+
+#test normal_data
+char str[LEN] = "Hello world";
+char *s21_res = s21_strchr(str, 'o');
+char *orig_res = strchr(str, 'o');
+  ck_assert_ptr_eq(s21_res, orig_res);
+
+#test null_str
+char *str = NULL;
+char *s21_res = s21_strchr(str, 'o');
+char *orig_res = strchr(str, 'o');
+  ck_assert_ptr_eq(s21_res, orig_res);
+
+#test zero_char
+char str[LEN] = "Hello world";
+char *s21_res = s21_strchr(str, '\0');
+char *orig_res = strchr(str, '\0');
+  ck_assert_ptr_eq(s21_res, orig_res);  
+
+#test empty_str
+char str[LEN] = "";
+char *s21_res = s21_strchr(str, 'o');
+char *orig_res = strchr(str, 'o');
+  ck_assert_ptr_eq(s21_res, orig_res);
+
+#test zero_data
+char str[LEN] = "Hell\0o world";
+char *s21_res = s21_strchr(str, 'o');
+char *orig_res = strchr(str, 'o');
+  ck_assert_ptr_eq(s21_res, orig_res);
+
+#test wrong_char
+char str[LEN] = "Hello world";
+char *s21_res = s21_strchr(str, 'z');
+char *orig_res = strchr(str, 'z');
+  ck_assert_ptr_eq(s21_res, orig_res);
+
+#test long_str
+char *str = calloc(LEN*LEN*LEN, sizeof(char));
+memset(str, 'a', LEN*LEN*LEN-1);
+char *s21_res = s21_strchr(str, 'a'); 
+char *orig_res = strchr(str, 'a');
+  ck_assert_ptr_eq(s21_res, orig_res);
+
+#main-pre
+tcase_set_timeout(tc1_1,10);

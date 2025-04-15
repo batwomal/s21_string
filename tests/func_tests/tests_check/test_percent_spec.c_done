@@ -1,0 +1,23 @@
+#include "../../../src/core/io/s21_sprintf.h"
+#include "../s21_string_tests.h"
+
+#suite percent_spec
+#define LEN 100
+
+#test only_percent_spec
+
+char *out = s21_calloc(LEN);
+int len = 0;
+len += spec_percent(&out);
+ck_assert_int_eq(len, 1);
+ck_assert_str_eq(out, "%");
+free(out);
+
+#test percent_spec_with_flags
+
+char *out = s21_calloc(LEN);
+int len = 0;
+len += spec_percent(&out);
+ck_assert_int_eq(len, 1);
+ck_assert_str_eq(out, "%");
+free(out);

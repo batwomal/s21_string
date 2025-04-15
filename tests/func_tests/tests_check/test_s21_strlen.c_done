@@ -1,0 +1,41 @@
+#include "../../s21_string.h"
+#include "../s21_string_tests.h"
+
+#suite s21_strlen
+#define LEN 100
+
+#test normal_data
+char str[LEN] = "Hello world";
+int s21_res = s21_strlen(str);
+int orig_res = strlen(str);
+  ck_assert_int_eq(s21_res, orig_res);
+
+#test null_str
+char *str = NULL;
+int s21_res = s21_strlen(str);
+int orig_res = strlen(str);
+  ck_assert_int_eq(s21_res, orig_res);
+
+#test zero_data
+char str[LEN] = "Hell\0o world";
+int s21_res = s21_strlen(str);
+int orig_res = strlen(str);
+  ck_assert_int_eq(s21_res, orig_res);
+
+#test empty_str
+char str[LEN] = "";
+int s21_res = s21_strlen(str);
+int orig_res = strlen(str);
+  ck_assert_int_eq(s21_res, orig_res);
+
+#test long_str  
+char str[LEN*LEN];
+memset(str, 'a', LEN*LEN);
+int s21_res = s21_strlen(str);
+int orig_res = strlen(str);
+  ck_assert_int_eq(s21_res, orig_res);
+
+#main-pre
+tcase_set_timeout(tc1_1,10);
+
+

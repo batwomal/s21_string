@@ -1,0 +1,27 @@
+#include "../s21_string_tests.h"
+#include <check.h>
+
+#suite s21_lftoa_large
+  #test-loop(0,10000) ochen_mnogo_testov
+    long double value = 1e-20 * powl(1.009253815726334, _i);
+    int precision = _i % 20;
+    char *s21_out = s21_calloc(BUF_SIZE + 1);
+    char *orig_out = s21_calloc(BUF_SIZE + 1);
+    s21_out = s21_lftoa(s21_out, value, precision);
+    int len_s21_out = strlen(s21_out);
+    int len_orig_out = sprintf(orig_out, "%.*Lf", precision, value);
+    long double orig_value = strtold(orig_out, NULL);
+    long double s21_value = strtold(s21_out, NULL);
+    int result = (len_s21_out == len_orig_out) && (s21_value - orig_value < LDBL_EPSILON);
+    ck_assert_msg(result, "\ninput: {%.*Lf} {%d}\n[orig str: %s]\n[s21 str: %s]\n[orig len: %d]\n[s21 len: %d]", precision, value, precision, orig_out, s21_out, len_orig_out, len_s21_out);
+    free(s21_out);
+    free(orig_out);
+
+#main-pre
+    system("mkdir -p tests/logs");
+    char full_filename[BUF_SIZE];
+    sprintf(full_filename, "tests/logs/%s.log",__FILE_NAME__);
+    srunner_set_log(sr, full_filename);
+
+#main-post
+  return nf;

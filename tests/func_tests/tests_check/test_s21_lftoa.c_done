@@ -1,0 +1,51 @@
+#include "../s21_string_tests.h"
+#include "test_s21_lftoa.h"
+#include <check.h>
+
+#define BUF_SIZE 1024
+
+#suite s21_lftoa
+  #test-loop(0,20) float_data
+  input_f_s21_lftoa input[] = INPUT_FLOAT_DATA;
+      char *s21_out = s21_calloc(BUF_SIZE + 1);
+      char *orig_out = s21_calloc(BUF_SIZE + 1);
+      s21_out = s21_lftoa(s21_out, input[_i].num, input[_i].precision);
+      int len_s21_out = strlen(s21_out);
+      int len_orig_out = sprintf(orig_out, "%.*f", input[_i].precision, input[_i].num);
+      int result = (len_s21_out == len_orig_out) && (strcmp(s21_out, orig_out) == 0);
+      ck_assert_msg(result, "\ninput: {%.*f} {%d}\n[orig str: %s]\n[s21 str: %s]\n[orig len: %d]\n[s21 len: %d]", input[_i].precision, input[_i].num, input[_i].precision, orig_out, s21_out, len_orig_out, len_s21_out);
+      free(s21_out);
+      free(orig_out);
+
+  #test-loop(0,20) double_data
+  input_d_s21_lftoa input[] = INPUT_DOUBLE_DATA;
+      char *s21_out = s21_calloc(BUF_SIZE + 1);
+      char *orig_out = s21_calloc(BUF_SIZE + 1);
+      s21_out = s21_lftoa(s21_out, input[_i].num, input[_i].precision);
+      int len_s21_out = strlen(s21_out);
+      int len_orig_out = sprintf(orig_out, "%.*f", input[_i].precision, input[_i].num);
+      int result = (len_s21_out == len_orig_out) && (strcmp(s21_out, orig_out) == 0);
+      ck_assert_msg(result, "\ninput: {%.*f} {%d}\n[orig str: %s]\n[s21 str: %s]\n[orig len: %d]\n[s21 len: %d]", input[_i].precision, input[_i].num, input[_i].precision, orig_out, s21_out, len_orig_out, len_s21_out);
+      free(s21_out);
+      free(orig_out);
+
+  #test-loop(0,20) long_double_data
+  input_ld_s21_lftoa input[] = INPUT_LONG_DOUBLE_DATA;
+      char *s21_out = s21_calloc(BUF_SIZE + 1);
+      char *orig_out = s21_calloc(BUF_SIZE + 1);
+      s21_out = s21_lftoa(s21_out, input[_i].num, input[_i].precision);
+      int len_s21_out = strlen(s21_out);
+      int len_orig_out = sprintf(orig_out, "%.*Lf", input[_i].precision, input[_i].num);
+      int result = (len_s21_out == len_orig_out) && (strcmp(s21_out, orig_out) == 0);
+      ck_assert_msg(result, "\ninput: {%.*Lf} {%d}\n[orig str: %s]\n[s21 str: %s]\n[orig len: %d]\n[s21 len: %d]", input[_i].precision, input[_i].num, input[_i].precision, orig_out, s21_out, len_orig_out, len_s21_out);
+      free(s21_out);
+      free(orig_out);
+
+#main-pre
+    system("mkdir -p tests/logs");
+    char full_filename[BUF_SIZE];
+    sprintf(full_filename, "tests/logs/%s.log",__FILE_NAME__);
+    srunner_set_log(sr, full_filename);
+
+#main-post
+  return nf;

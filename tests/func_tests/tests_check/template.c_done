@@ -1,0 +1,16 @@
+#include "../s21_string_tests.h"
+#include <check.h>
+
+#suite
+  #tcase
+    #test
+
+
+#main-pre
+    system("mkdir -p tests/logs");
+    char full_filename[BUF_SIZE];
+    sprintf(full_filename, "tests/logs/%s.log",__FILE_NAME__);
+    srunner_set_log(sr, full_filename);
+
+#main-post
+  return nf;

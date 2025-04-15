@@ -1,0 +1,94 @@
+#include "../s21_string_tests.h"
+
+#suite s21_atoi
+
+#test normal_data
+char *str = "12345";
+int s21_res = s21_atoi(str);
+int orig_res = atoi(str);
+ck_assert_int_eq(s21_res, orig_res);
+
+#test null_str
+char *str = NULL;
+int s21_res = s21_atoi(str);
+int orig_res = 0;
+ck_assert_int_eq(s21_res, orig_res);  
+
+#test empty_str
+char *str = "";
+int s21_res = s21_atoi(str);
+int orig_res = atoi(str);
+ck_assert_int_eq(s21_res, orig_res);
+
+#test int_max
+char *str = "2147483647";
+int s21_res = s21_atoi(str);
+int orig_res = atoi(str);
+ck_assert_int_eq(s21_res, orig_res);  
+
+#test int_min
+char *str = "-2147483648";
+int s21_res = s21_atoi(str);
+int orig_res = atoi(str);
+ck_assert_int_eq(s21_res, orig_res);  
+
+#test zero
+char *str = "0";
+int s21_res = s21_atoi(str);
+int orig_res = atoi(str);
+ck_assert_int_eq(s21_res, orig_res);
+
+#test negative
+char *str = "-12345";
+int s21_res = s21_atoi(str);
+int orig_res = atoi(str);
+ck_assert_int_eq(s21_res, orig_res);  
+
+#test lower_than_int_min
+char *str = "-2147483649999";
+int s21_res = s21_atoi(str);
+int orig_res = atoi(str);
+ck_assert_int_eq(s21_res, orig_res);  
+
+#test higher_than_int_max
+char *str = "2147483648";
+int s21_res = s21_atoi(str);
+int orig_res = INT_MAX;
+ck_assert_int_eq(s21_res, orig_res);  
+
+#test spaces
+char *str = "   12345   ";
+int s21_res = s21_atoi(str);
+int orig_res = atoi(str);
+ck_assert_int_eq(s21_res, orig_res);
+
+#test tabs
+char *str = "\t\t12345\t\t";
+int s21_res = s21_atoi(str);
+int orig_res = atoi(str);
+ck_assert_int_eq(s21_res, orig_res);
+
+#test newlines
+char *str = "\n\n12345\n\n";
+int s21_res = s21_atoi(str);
+int orig_res = atoi(str);
+ck_assert_int_eq(s21_res, orig_res);
+
+#test num_and_str
+char *str = "12345abc";
+int s21_res = s21_atoi(str);
+int orig_res = atoi(str);
+ck_assert_int_eq(s21_res, orig_res);
+ck_assert_str_eq(str, "12345abc");
+
+#test spaces_and_negative
+char *str = "   -12345   ";
+int s21_res = s21_atoi(str);
+int orig_res = atoi(str);
+ck_assert_int_eq(s21_res, orig_res);
+
+#test tabs_and_plus
+char *str = "\t\t+12345\t\t"; 
+int s21_res = s21_atoi(str);  
+int orig_res = atoi(str);  
+ck_assert_int_eq(s21_res, orig_res);

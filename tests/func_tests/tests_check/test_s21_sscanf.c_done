@@ -1,0 +1,24 @@
+#include "../s21_string_tests.h"
+#include <check.h>
+
+#test lol_kek
+  s21_sscanf("lol", "kek");
+
+#test null_lol
+  s21_sscanf(NULL, "kek");
+
+#test null_kek
+  s21_sscanf("lol", NULL);
+
+#test null_lol_null_kek
+  s21_sscanf(NULL, NULL);
+
+
+#main-pre
+    system("mkdir -p tests/logs");
+    char full_filename[BUF_SIZE];
+    sprintf(full_filename, "tests/logs/%s.log",__FILE_NAME__);
+    srunner_set_log(sr, full_filename);
+
+#main-post
+  return nf;
